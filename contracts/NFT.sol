@@ -13,7 +13,8 @@ contract NFT is ERC721, AccessControl {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     // Optional mapping for token URIs
-    mapping(uint256 => string) private _tokenURIs;
+    mapping(uint256 => string) public tokenURIs;
+
 
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
@@ -29,7 +30,7 @@ contract NFT is ERC721, AccessControl {
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721URIStorage: URI query for nonexistent token");
 
-        string memory _tokenURI = _tokenURIs[tokenId];
+        string memory _tokenURI = tokenURIs[tokenId];
         string memory base = _baseURI();
 
         // If there is no base URI, return the token URI.
@@ -51,9 +52,9 @@ contract NFT is ERC721, AccessControl {
      *
      * - `tokenId` must exist.
      */
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {
+    function setTokenURI(uint256 tokenId, string memory _tokenURI) public onlyRole(MINTER_ROLE) {
         require(_exists(tokenId), "ERC721URIStorage: URI set of nonexistent token");
-        _tokenURIs[tokenId] = _tokenURI;
+        tokenURIs[tokenId] = _tokenURI;
     }
 
     /**
@@ -69,8 +70,8 @@ contract NFT is ERC721, AccessControl {
     function _burn(uint256 tokenId) internal virtual override {
         super._burn(tokenId);
 
-        if (bytes(_tokenURIs[tokenId]).length != 0) {
-            delete _tokenURIs[tokenId];
+        if (bytes(tokenURIs[tokenId]).length != 0) {
+            delete tokenURIs[tokenId];
         }
     }
 
