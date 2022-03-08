@@ -24,7 +24,7 @@ contract CertificatesLogic is Ownable {
     mapping(address => mapping(string => bool)) public learners;
     mapping(string => address[]) public learnersList;
 
-    /// @notice Leraner's on the course id certificate token id
+    /// @notice Leraner's on the course certificate token id
     mapping(address => mapping(string => uint256)) public certificatesId;
 
 
@@ -38,11 +38,13 @@ contract CertificatesLogic is Ownable {
     function createCourse(string memory _courseName) external onlyOwner() {
         require(courses[_courseName] == false, "Course is created already");
         courses[_courseName] = true;
+        coursesList.push(_courseName);
     }
 
     function addLearner(address _account, string memory _courseName) external onlyOwner() {
         require(learners[_account][_courseName] == false, "Learner has already been added on this course");
         learners[_account][_courseName] = true;
+        learnersList[_courseName].push(_account);
     }
 
     function removeLearner(address _account, string memory _courseName) external onlyOwner() {

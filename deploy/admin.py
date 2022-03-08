@@ -110,6 +110,11 @@ class AddCourse(QtWidgets.QMainWindow, addcourse.Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle('Добавить новый курс')
         # self.setWindowIcon(QIcon('logo.png'))
+        self.pushButton.clicked.connect(self.courseadd)
+    
+    def courseadd(self):
+        name = self.lineEdit.text()
+        os.system(f'brownie run scripts/add_course.py main {name} --network rinkeby')    
 
 
 class LearnersForm(QtWidgets.QMainWindow, learnersform.Ui_MainWindow):
@@ -118,6 +123,18 @@ class LearnersForm(QtWidgets.QMainWindow, learnersform.Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle('Редактирование списка учащихся')
         # self.setWindowIcon(QIcon('logo.png'))
+        self.pushButton.clicked.connect(self.learner_add)
+        self.pushButton_2.clicked.connect(self.learner_remove)
+
+    def learner_add(self):
+        name = self.lineEdit.text()
+        address = self.lineEdit_4.text()
+        os.system(f'brownie run scripts/add_learner.py main {name} {address} --network rinkeby')
+    
+    def learner_remove(self):
+        name = self.lineEdit.text()
+        address = self.lineEdit_4.text()
+        os.system(f'brownie run scripts/remove_learner.py main {name} {address} --network rinkeby') 
 
 
 class DescriptionForm(QtWidgets.QMainWindow, description.Ui_MainWindow):
