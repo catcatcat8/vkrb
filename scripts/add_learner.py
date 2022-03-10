@@ -1,7 +1,14 @@
-import brownie
+import brownie, json
 
 def main(*args, **kwargs):
-    nft = brownie.Contract("0x79222fdF61AC484AD1E8465b5c4315ecB11fC3f9")
-    certificate = brownie.Contract("0x27633Fb498a5B41c8B235302201659f94cdf5e4b")
+    nft_addr = ""
+    cert_addr = ""
+    with open("/home/lebedev/GitHub/vkrb/build/deployments/map.json", "r") as read_file:
+        data = json.load(read_file)
+        nft_addr = data["4"]["NFT"][0]
+        cert_addr = data["4"]["CertificatesLogic"][0]
 
+    nft = brownie.Contract(nft_addr)
+    certificate = brownie.Contract(cert_addr)
+    
     certificate.addLearner(args[0], args[1], {'from': brownie.accounts.load('admin')})

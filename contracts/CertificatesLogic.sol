@@ -8,6 +8,16 @@ contract CertificatesLogic is Ownable {
 
     NFT nft;
 
+    struct CertificateDescription {
+        string courseName;
+        string beginningDate;
+        string receivingDate;
+        string score;
+        string info;
+    }
+
+    mapping(address => CertificateDescription) public certificatesInfo;
+
     /// @notice Name of the educational organization
     string public name;
 
@@ -63,6 +73,20 @@ contract CertificatesLogic is Ownable {
         certificateIdCounter++;
     }
 
+    function addDescription(address _account, 
+                            string memory _courseName, 
+                            string memory _beginningDate, 
+                            string memory _receivingDate, 
+                            string memory _score, 
+                            string memory _info) external onlyOwner() {
+        require(isOnCourse(_account, _courseName), "This account is not on this course");
+        certificatesInfo[_account].courseName = _courseName;
+        certificatesInfo[_account].beginningDate = _beginningDate;
+        certificatesInfo[_account].receivingDate = _receivingDate;
+        certificatesInfo[_account].score = _score;
+        certificatesInfo[_account].info = _info;
+    }
+
     function viewCourses() external view returns(string[] memory) {
         return coursesList;
     }
@@ -71,17 +95,21 @@ contract CertificatesLogic is Ownable {
         return learnersList[_courseName];
     }
 
-    function isOnCourse(address _account, string memory _courseName) external view returns(bool) {
+    function isOnCourse(address _account, string memory _courseName) public view returns(bool) {
         return learners[_account][_courseName];
     }
 
-    function viewCertificateId(string memory _courseName) public view returns(uint256) {
-        require(certificatesId[msg.sender][_courseName] != 0, "You don't have certificate on this course");
-        return certificatesId[msg.sender][_courseName];
+    function viewCertificateId(address _account, string memory _courseName) public view returns(uint256) {
+        require(certificatesId[_account][_courseName] != 0, "You don't have certificate on this course");
+        return certificatesId[_account][_courseName];
     }
 
-    function viewCertificateURI(string memory _courseName) external view returns(string memory) {
-        uint256 certificateId = viewCertificateId(_courseName);
+    function viewCertificateURI(address _account, string memory _courseName) external view returns(string memory) {
+        uint256 certificateId = viewCertificateId(_account, _courseName);
         return nft.tokenURI(certificateId);
+    }
+
+    function getCertificateInfo(address _account) external view returns(CertificateDescription memory) {
+        return certificatesInfo[_account];
     }
 }

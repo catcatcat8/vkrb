@@ -129,12 +129,12 @@ class LearnersForm(QtWidgets.QMainWindow, learnersform.Ui_MainWindow):
     def learner_add(self):
         name = self.lineEdit.text()
         address = self.lineEdit_4.text()
-        os.system(f'brownie run scripts/add_learner.py main {name} {address} --network rinkeby')
+        os.system(f'brownie run scripts/add_learner.py main {address} {name} --network rinkeby')
     
     def learner_remove(self):
         name = self.lineEdit.text()
         address = self.lineEdit_4.text()
-        os.system(f'brownie run scripts/remove_learner.py main {name} {address} --network rinkeby') 
+        os.system(f'brownie run scripts/remove_learner.py main {address} {name} --network rinkeby') 
 
 
 class DescriptionForm(QtWidgets.QMainWindow, description.Ui_MainWindow):
@@ -143,6 +143,16 @@ class DescriptionForm(QtWidgets.QMainWindow, description.Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle('Добавить описание сертификата')
         # self.setWindowIcon(QIcon('logo.png'))
+        self.pushButton.clicked.connect(self.description_add)
+    
+    def description_add(self):
+        course = self.lineEdit.text()
+        address = self.lineEdit_2.text()
+        begin = self.lineEdit_3.text()
+        end = self.lineEdit_4.text()
+        score = self.lineEdit_5.text()
+        info = self.lineEdit_6.text()
+        os.system(f'brownie run scripts/add_description.py main {address} {course} {begin} {end} {score} {info} --network rinkeby') 
 
 
 class IpfsForm(QtWidgets.QMainWindow, ipfsform.Ui_MainWindow):
@@ -159,6 +169,13 @@ class NftForm(QtWidgets.QMainWindow, nftform.Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle('Создать NFT-сертификат')
         # self.setWindowIcon(QIcon('logo.png'))
+        self.pushButton.clicked.connect(self.create_nft)
+    
+    def create_nft(self):
+        course = self.lineEdit.text()
+        address = self.lineEdit_2.text()
+        ipfsAddr = self.lineEdit_3.text()
+        os.system(f'brownie run scripts/create_nft.py main {address} {course} {ipfsAddr} --network rinkeby')
 
 
 def main():
