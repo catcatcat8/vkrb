@@ -3,3 +3,9 @@ __pycache__
 .hypothesis/
 build/
 reports/
+node_modules
+cache
+yarn.lock
+yarn-error.log
+interfaces
+artifacts
