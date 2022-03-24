@@ -4,8 +4,8 @@ const POLYGON_API = ''
 const AVAX_API = ''
 const FTM_API = ''
 
-const prod = ['bcb72756e4629f8a912c45552e0c1aa6cf7898439f774424fdddbcb77a6a7268', 'b693f4a11d0d2e6bdebdf6a29a193b8d28da1792f48892b3a03f6d220fb4045f']
-const test = ['bcb72756e4629f8a912c45552e0c1aa6cf7898439f774424fdddbcb77a6a7268', 'b693f4a11d0d2e6bdebdf6a29a193b8d28da1792f48892b3a03f6d220fb4045f']
+const prod = ['88c2c91c9080ce27ef8acbcbe4cf13b8be9367c29a04e82e183d5044808a916c']
+const test = ['88c2c91c9080ce27ef8acbcbe4cf13b8be9367c29a04e82e183d5044808a916c']
 
 export default {
   moralis: 'bbf9383fd2ea1688c9c69ff0',

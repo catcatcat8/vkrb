@@ -101,7 +101,7 @@ class DeployApp(QtWidgets.QMainWindow, deployform.Ui_MainWindow):
     def deployrun(self):
         name = self.lineEdit.text()
         abbr = self.lineEdit_2.text()
-        os.system(f'brownie run scripts/deploy.py main {name} {abbr} --network rinkeby')
+        os.system(f'brownie run scripts/deploy.py main {name} {abbr} --network bsc-test')
 
 
 class AddCourse(QtWidgets.QMainWindow, addcourse.Ui_MainWindow):
@@ -114,7 +114,7 @@ class AddCourse(QtWidgets.QMainWindow, addcourse.Ui_MainWindow):
     
     def courseadd(self):
         name = self.lineEdit.text()
-        os.system(f'brownie run scripts/add_course.py main {name} --network rinkeby')    
+        os.system(f'brownie run scripts/add_course.py main {name} --network bsc-test')    
 
 
 class LearnersForm(QtWidgets.QMainWindow, learnersform.Ui_MainWindow):
@@ -129,12 +129,12 @@ class LearnersForm(QtWidgets.QMainWindow, learnersform.Ui_MainWindow):
     def learner_add(self):
         name = self.lineEdit.text()
         address = self.lineEdit_4.text()
-        os.system(f'brownie run scripts/add_learner.py main {address} {name} --network rinkeby')
+        os.system(f'brownie run scripts/add_learner.py main {address} {name} --network bsc-test')
     
     def learner_remove(self):
         name = self.lineEdit.text()
         address = self.lineEdit_4.text()
-        os.system(f'brownie run scripts/remove_learner.py main {address} {name} --network rinkeby') 
+        os.system(f'brownie run scripts/remove_learner.py main {address} {name} --network bsc-test') 
 
 
 class DescriptionForm(QtWidgets.QMainWindow, description.Ui_MainWindow):
@@ -152,7 +152,7 @@ class DescriptionForm(QtWidgets.QMainWindow, description.Ui_MainWindow):
         end = self.lineEdit_4.text()
         score = self.lineEdit_5.text()
         info = self.lineEdit_6.text()
-        os.system(f'brownie run scripts/add_description.py main {address} {course} {begin} {end} {score} {info} --network rinkeby') 
+        os.system(f'brownie run scripts/add_description.py main {address} {course} {begin} {end} {score} {info} --network bsc-test') 
 
 
 class IpfsForm(QtWidgets.QMainWindow, ipfsform.Ui_MainWindow):
@@ -175,7 +175,7 @@ class NftForm(QtWidgets.QMainWindow, nftform.Ui_MainWindow):
         course = self.lineEdit.text()
         address = self.lineEdit_2.text()
         ipfsAddr = self.lineEdit_3.text()
-        os.system(f'brownie run scripts/create_nft.py main {address} {course} {ipfsAddr} --network rinkeby')
+        os.system(f'brownie run scripts/create_nft.py main {address} {course} {ipfsAddr} --network bsc-test')
 
 
 def main():

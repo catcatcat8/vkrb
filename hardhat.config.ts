@@ -40,7 +40,8 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     owner: {
       default: 0,
-      bsc_testnet: MY_WALLET
+      bsc_testnet: MY_WALLET,
+      rinkeby: MY_WALLET
     },
   },
   networks: {
