@@ -9,14 +9,13 @@ contract CertificatesLogic is Ownable {
     NFT nft;
 
     struct CertificateDescription {
-        string courseName;
         string beginningDate;
         string receivingDate;
         string score;
         string info;
     }
 
-    mapping(address => CertificateDescription) public certificatesInfo;
+    mapping(address => mapping(string => CertificateDescription)) certificatesInfo;
 
     /// @notice Name of the educational organization
     string public name;
@@ -80,11 +79,10 @@ contract CertificatesLogic is Ownable {
                             string memory _score, 
                             string memory _info) external onlyOwner() {
         require(isOnCourse(_account, _courseName), "This account is not on this course");
-        certificatesInfo[_account].courseName = _courseName;
-        certificatesInfo[_account].beginningDate = _beginningDate;
-        certificatesInfo[_account].receivingDate = _receivingDate;
-        certificatesInfo[_account].score = _score;
-        certificatesInfo[_account].info = _info;
+        certificatesInfo[_account][_courseName].beginningDate = _beginningDate;
+        certificatesInfo[_account][_courseName].receivingDate = _receivingDate;
+        certificatesInfo[_account][_courseName].score = _score;
+        certificatesInfo[_account][_courseName].info = _info;
     }
 
     function viewCourses() external view returns(string[] memory) {
@@ -109,7 +107,7 @@ contract CertificatesLogic is Ownable {
         return nft.tokenURI(certificateId);
     }
 
-    function getCertificateInfo(address _account) external view returns(CertificateDescription memory) {
-        return certificatesInfo[_account];
+    function getCertificateInfo(address _account, string memory _courseName) external view returns(CertificateDescription memory) {
+        return certificatesInfo[_account][_courseName];
     }
 }
